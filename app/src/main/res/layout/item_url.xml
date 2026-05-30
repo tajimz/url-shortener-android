@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:id="@+id/parent"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    >
+
+    <TextView
+        android:id="@+id/tvShortUrlAlias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BdG6Z"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/tvLongUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="https://example.com"
+        app:layout_constraintTop_toBottomOf="@id/tvShortUrlAlias"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvLongUrl"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="40dp"/>
+    <TextView
+        android:id="@+id/tvViews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clicks: 10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
