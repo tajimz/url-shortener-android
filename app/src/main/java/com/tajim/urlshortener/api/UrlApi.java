@@ -36,4 +36,15 @@ public class UrlApi {
                 .enqueue(callback);
     }
 
+    public static void destroy(String token, long id, Callback callback){
+        Request request = ApiRequest.authorized(token)
+                .url(ApiConfig.BASE_URL+"/urls/"+id)
+                .delete()
+                .build();
+
+        ApiClient.getClient()
+                .newCall(request)
+                .enqueue(callback);
+    }
+
 }

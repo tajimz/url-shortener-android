@@ -1,6 +1,7 @@
 package com.tajim.urlshortener.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -8,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tajim.urlshortener.activities.ShowUrlActivity;
 import com.tajim.urlshortener.api.ApiConfig;
 import com.tajim.urlshortener.databinding.ItemUrlBinding;
 import com.tajim.urlshortener.models.ShortUrl;
@@ -42,6 +44,17 @@ public class UrlAdapter extends RecyclerView.Adapter<UrlAdapter.ViewHolder> {
 
             return true;
         });
+
+        holder.binding.getRoot().setOnClickListener(v->{
+            Intent intent = new Intent(v.getContext(), ShowUrlActivity.class);
+            intent.putExtra("short_code", shortUrl.short_code);
+            intent.putExtra("long_url", shortUrl.long_url);
+            intent.putExtra("clicks", shortUrl.clicks);
+            intent.putExtra("id", shortUrl.id);
+            v.getContext().startActivity(intent);
+        });
+
+
     }
 
     @Override
