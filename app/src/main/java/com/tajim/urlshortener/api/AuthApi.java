@@ -14,9 +14,8 @@ public class AuthApi {
                 .add("device_name", deviceName)
                 .build();
 
-        Request request = new Request.Builder()
+        Request request = ApiRequest.guest()
                 .url(ApiConfig.BASE_URL + "/login")
-                .addHeader("Accept", "application/json")
                 .post(body)
                 .build();
 
@@ -33,9 +32,8 @@ public class AuthApi {
                 .add("device_name", deviceName)
                 .build();
 
-        Request request = new Request.Builder()
+        Request request = ApiRequest.guest()
                 .url(ApiConfig.BASE_URL + "/register")
-                .addHeader("Accept", "application/json")
                 .post(body)
                 .build();
 
