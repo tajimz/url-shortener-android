@@ -1,5 +1,8 @@
 package com.tajim.urlshortener.activities;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         initVariables();
         checkIfLoggedIn();
         setupClickListeners();
-        fetchUrls();
 
 
 
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void initVariables(){
+        binding.progress.setVisibility(GONE);
         sessionManager = new SessionManager(this);
         urlList = new ArrayList<>();
         urlAdapter = new UrlAdapter(urlList);
@@ -77,29 +80,35 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
     }
-    private void setupClickListeners(){
 
-    }
     private void fetchUrls(){
+        binding.progress.setVisibility(VISIBLE);
         UrlApi.index(sessionManager.getToken(), new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                runOnUiThread(() ->
-                        Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show()
-                );
+                runOnUiThread(()->{
+                    binding.progress.setVisibility(GONE);
+                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String body = response.body().string();
                 Log.d("MainActivity", "onResponse: "+body);
+
                 try {
                     parseUrls(body);
                 } catch (Exception e) {
-                    runOnUiThread(() ->
-                            Toast.makeText(MainActivity.this, "Parse error", Toast.LENGTH_SHORT).show()
-                    );
+
+                    runOnUiThread(() -> {
+                        binding.progress.setVisibility(GONE);
+                        Toast.makeText(MainActivity.this, "Parse error", Toast.LENGTH_SHORT).show();
+                    });
+
                 }
+
 
 
             }
@@ -121,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             newList.add(shortUrl);
 
         }
-        runOnUiThread(() -> setUrls(newList));
+        setUrls(newList);
 
 
     }
@@ -130,5 +139,12 @@ public class MainActivity extends AppCompatActivity {
         urlList.addAll(newList);
         urlAdapter.notifyDataSetChanged();
         Log.d("MainActivity", newList.toString());
+        binding.progress.setVisibility(GONE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchUrls();
     }
 }
