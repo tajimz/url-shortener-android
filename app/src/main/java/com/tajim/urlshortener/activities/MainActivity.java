@@ -80,7 +80,11 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
     }
-
+    private void setupClickListeners(){
+        binding.btnAdd.setOnClickListener(v->{
+            startActivity(new Intent(this, CreateUrlActivity.class));
+        });
+    }
     private void fetchUrls(){
         binding.progress.setVisibility(VISIBLE);
         UrlApi.index(sessionManager.getToken(), new Callback() {

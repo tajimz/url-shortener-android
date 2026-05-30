@@ -18,4 +18,22 @@ public class UrlApi {
                 .enqueue(callback);
     }
 
+
+    public static void store(String token, String longUrl, String shortCode, Callback callback){
+        FormBody.Builder bodyBuilder = new FormBody.Builder();
+        bodyBuilder.add("long_url", longUrl);
+        if (shortCode != null && !shortCode.isBlank()) bodyBuilder.add("short_code", shortCode); //short Code is Optional
+
+        RequestBody body = bodyBuilder.build();
+
+        Request request = ApiRequest.authorized(token)
+                .url(ApiConfig.BASE_URL+"/urls")
+                .post(body)
+                .build();
+
+        ApiClient.getClient()
+                .newCall(request)
+                .enqueue(callback);
+    }
+
 }
